@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<!--
+    smoke.xml
+    ════════════════════════════════════════
+    Runs ONLY @smoke tagged tests.
+    Use for quick sanity check: "is the app basically working?"
+    Run time target: under 5 minutes.
+
+    HOW TO RUN:
+      mvn test -Dsurefire.suiteXmlFiles=src/test/resources/suites/smoke.xml
+    ════════════════════════════════════════
+-->
+<suite name="Smoke Test Suite" verbose="1" parallel="none">
+
+    <listeners>
+        <listener class-name="com.automationexercise.listeners.TestListener"/>
+    </listeners>
+
+    <test name="Smoke - Cucumber BDD">
+        <!-- Only Cucumber scenarios tagged @smoke will run
+             because TestRunner has tags = "@smoke" — update TestRunner to
+             tags = "@smoke" before running this suite -->
+        <classes>
+            <class name="com.automationexercise.runners.TestRunner"/>
+        </classes>
+    </test>
+
+    <test name="Smoke - TestNG Tests">
+        <!-- Only run methods in group "smoke" from LoginTest -->
+        <groups>
+            <run>
+                <include name="smoke"/>   <!-- Only methods with groups={"smoke",...} -->
+            </run>
+        </groups>
+        <classes>
+            <class name="com.automationexercise.testng_examples.LoginTest"/>
+        </classes>
+    </test>
+
+    <test name="Smoke - API Tests">
+        <groups>
+            <run>
+                <include name="smoke"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.automationexercise.api.ProductsApiTest"/>
+        </classes>
+    </test>
+
+</suite>
