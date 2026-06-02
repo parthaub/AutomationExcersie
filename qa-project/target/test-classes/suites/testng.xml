@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<!--
+    testng.xml
+    ══════════════════════════════════════════════════════════════════
+    This file tells TestNG WHAT to run, HOW to run it, and WHICH
+    listeners to attach.
+
+    STRUCTURE:
+      <suite>    → the entire test run (one per file)
+        <listeners> → global event listeners (TestListener, etc.)
+        <test>    → a group of test classes (can have multiple <test> blocks)
+          <classes> → the test classes to include
+            <class>  → one Java test class
+              <methods> → (optional) include/exclude specific methods
+
+    HOW TO RUN WITH MAVEN:
+      mvn clean test
+      (Surefire plugin reads this file — configured in pom.xml)
+
+    HOW TO RUN SPECIFIC GROUPS:
+      mvn test -Dgroups=smoke
+      mvn test -Dgroups="smoke,regression"
+      mvn test -DexcludedGroups=api
+
+    PARALLEL EXECUTION:
+      parallel="methods"  → each @Test method runs in its own thread
+      parallel="classes"  → each class runs in its own thread
+      parallel="tests"    → each <test> block runs in its own thread
+      thread-count="3"    → max 3 threads at once
+      For beginners: keep parallel="none" until you understand ThreadLocal.
+    ══════════════════════════════════════════════════════════════════
+-->
+
+<suite name="AutomationExercise Full Test Suite"
+       verbose="2"
+       parallel="none"
+       thread-count="1">
+
+    <!-- ═══════════════════════════════════════════════════════
+         GLOBAL LISTENERS
+         These apply to ALL tests in this suite.
+         TestListener: logs pass/fail to Extent report, takes screenshots.
+    ═══════════════════════════════════════════════════════ -->
+    <listeners>
+        <listener class-name="com.automationexercise.listeners.TestListener"/>
+    </listeners>
+
+    <!-- ═══════════════════════════════════════════════════════
+         TEST BLOCK 1: Cucumber BDD Tests
+         Runs all Cucumber scenarios via the TestRunner class.
+         Tags control which scenarios run (@regression by default).
+    ═══════════════════════════════════════════════════════ -->
+    <test name="Cucumber BDD Tests">
+        <classes>
+            <class name="com.automationexercise.runners.TestRunner"/>
+        </classes>
+    </test>
+
+    <!-- ═══════════════════════════════════════════════════════
+         TEST BLOCK 2: Pure TestNG Tests (LoginTest)
+         These are direct TestNG tests — no Cucumber feature files.
+         Demonstrates all TestNG annotations in action.
+    ═══════════════════════════════════════════════════════ -->
+    <test name="TestNG Login Tests">
+        <classes>
+            <class name="com.automationexercise.testng_examples.LoginTest"/>
+        </classes>
+    </test>
+
+    <!-- ═══════════════════════════════════════════════════════
+         TEST BLOCK 3: API Tests
+         REST Assured tests — no browser, pure HTTP requests.
+    ═══════════════════════════════════════════════════════ -->
+    <test name="API Tests">
+        <classes>
+            <class name="com.automationexercise.api.ProductsApiTest"/>
+        </classes>
+    </test>
+
+</suite>

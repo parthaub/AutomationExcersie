@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- ─────────────────────────────────────────────────────────────────────
+         PROJECT COORDINATES
+         groupId   = your company/personal namespace (like a Java package)
+         artifactId = the name of this project
+         version   = current version of this project
+    ───────────────────────────────────────────────────────────────────────── -->
+    <groupId>com.automationexercise</groupId>
+    <artifactId>qa-automation-project</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>AutomationExercise QA Project</name>
+
+    <!-- ─────────────────────────────────────────────────────────────────────
+         PROPERTIES
+         Think of these as variables. We define versions here once
+         and reference them below so we only update in one place.
+    ───────────────────────────────────────────────────────────────────────── -->
+    <properties>
+        <!-- Java version to compile with -->
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+
+        <!-- File encoding (always UTF-8 to avoid weird character issues) -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Dependency version numbers — update here if you want a newer version -->
+        <selenium.version>4.18.1</selenium.version>
+        <testng.version>7.9.0</testng.version>
+        <cucumber.version>7.15.0</cucumber.version>
+        <extentreports.version>5.1.1</extentreports.version>
+        <webdrivermanager.version>5.7.0</webdrivermanager.version>
+        <rest-assured.version>5.4.0</rest-assured.version>
+        <poi.version>5.2.5</poi.version>
+        <jackson.version>2.16.1</jackson.version>
+        <log4j.version>2.22.1</log4j.version>
+    </properties>
+
+    <!-- ─────────────────────────────────────────────────────────────────────
+         DEPENDENCIES
+         These are the external libraries our project needs.
+         Maven downloads them automatically from the internet (Maven Central).
+    ───────────────────────────────────────────────────────────────────────── -->
+    <dependencies>
+
+        <!-- ── SELENIUM ─────────────────────────────────────────────────────
+             Selenium controls a real browser (Chrome, Firefox, etc.)
+             This single dependency pulls in everything you need for Selenium 4.
+        ──────────────────────────────────────────────────────────────────── -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${selenium.version}</version>
+        </dependency>
+
+        <!-- ── WEBDRIVERMANAGER ──────────────────────────────────────────────
+             Auto-downloads the correct ChromeDriver / GeckoDriver for your
+             installed browser version. No manual driver management needed!
+        ──────────────────────────────────────────────────────────────────── -->
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>${webdrivermanager.version}</version>
+        </dependency>
+
+        <!-- ── TESTNG ────────────────────────────────────────────────────────
+             The test runner framework. Provides @Test, @BeforeTest,
+             @DataProvider, IRetryAnalyzer, ITestListener, etc.
+        ──────────────────────────────────────────────────────────────────── -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testng.version}</version>
+        </dependency>
+
+        <!-- ── CUCUMBER JAVA ─────────────────────────────────────────────────
+             Cucumber core for Java — reads .feature files and maps
+             Gherkin steps (Given/When/Then) to your Java step methods.
+        ──────────────────────────────────────────────────────────────────── -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>${cucumber.version}</version>
+        </dependency>
+
+        <!-- ── CUCUMBER TESTNG ───────────────────────────────────────────────
+             Bridges Cucumber with TestNG so you can run Cucumber scenarios
+             using a TestNG runner class (AbstractTestNGCucumberTests).
+        ──────────────────────────────────────────────────────────────────── -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-testng</artifactId>
+            <version>${cucumber.version}</version>
+        </dependency>
+
+        <!-- ── EXTENT REPORTS ────────────────────────────────────────────────
+             Generates beautiful HTML reports with charts, screenshots,
+             test logs, and system information after each run.
+        ──────────────────────────────────────────────────────────────────── -->
+        <dependency>
+            <groupId>com.aventstack</groupId>
+            <artifactId>extentreports</artifactId>
+            <version>${extentreports.version}</version>
+        </dependency>
+
+        <!-- ── REST ASSURED ──────────────────────────────────────────────────
+             The most popular Java library for API testing.
+             Lets you write HTTP requests (GET, POST, PUT, DELETE)
+             and assert responses in a fluent, readable way.
+        ──────────────────────────────────────────────────────────────────── -->
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>${rest-assured.version}</version>
+        </dependency>
+
+        <!-- ── JACKSON DATABIND ──────────────────────────────────────────────
+             Converts JSON strings ↔ Java objects.
+             Used with REST Assured to parse API responses.
+        ──────────────────────────────────────────────────────────────────── -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <!-- ── APACHE POI ────────────────────────────────────────────────────
+             Reads and writes Excel (.xlsx) files from Java.
+             Used for data-driven testing (reading test data from Excel).
+        ──────────────────────────────────────────────────────────────────── -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>${poi.version}</version>
+        </dependency>
+
+        <!-- ── LOG4J2 ────────────────────────────────────────────────────────
+             Logging framework. Better than System.out.println because
+             you can control log levels (DEBUG, INFO, WARN, ERROR)
+             and write logs to files.
+        ──────────────────────────────────────────────────────────────────── -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+
+    </dependencies>
+
+    <!-- ─────────────────────────────────────────────────────────────────────
+         BUILD PLUGINS
+         These plugins control how Maven builds and runs our project.
+    ───────────────────────────────────────────────────────────────────────── -->
+    <build>
+        <plugins>
+
+            <!-- Maven Compiler Plugin: tells Maven which Java version to use -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.12.1</version>
+                <configuration>
+                    <source>11</source>
+                    <target>11</target>
+                </configuration>
+            </plugin>
+
+            <!-- Maven Surefire Plugin: runs TestNG tests when you do "mvn test"
+                 Points to our testng.xml suite file which lists which tests to run -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+                <configuration>
+                    <!-- This tells Surefire to use our TestNG XML suite file -->
+                    <suiteXmlFiles>
+                        <suiteXmlFile>src/test/resources/suites/testng.xml</suiteXmlFile>
+                    </suiteXmlFiles>
+                    <!-- Don't fail the build just because tests fail
+                         (we want to see the report even if tests fail) -->
+                    <testFailureIgnore>true</testFailureIgnore>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
+</project>
